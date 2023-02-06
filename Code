@@ -1,0 +1,660 @@
+PROJECT REPORT CODING:
+Login_Form.java : -
+package MyPackage;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import java.awt.event.FocusAdapter; 
+import java.awt.event.FocusEvent;
+import javax.swing.JButton;
+import java.awt.Button;
+import java.awt.SystemColor;
+import java.awt.Cursor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.sql.*;
+public class Login_From extends JFrame {
+private JPanel contentPane;
+private JTextField user;
+private JPasswordField pass;
+/**
+* Launch the
+application. */
+public static void main(String[] args) {
+EventQueue.invokeLater(new Runnable() {
+public void run() {
+try {
+Login_From frame = new Login_From();
+frame.setVisible(true);
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+});
+}
+/**
+* Create the
+frame. */
+public Login_From() {
+this.setLocationRelativeTo(null); 
+setBackground(new Color(255, 182, 193));
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+setBounds(100, 100, 500, 350);
+contentPane = new JPanel();
+contentPane.setBackground(new Color(255, 192,
+203)); contentPane.setBorder(new EmptyBorder(5, 5,
+5, 5)); setContentPane(contentPane);
+contentPane.setLayout(null);
+JPanel panel = new JPanel();
+panel.setBackground(Color.GRAY);
+panel.setBounds(10, 11, 464, 290);
+contentPane.add(panel);
+panel.setLayout(null);
+JPanel panel_1 = new JPanel();
+panel_1.setForeground(SystemColor.inactiveCaptionText);
+panel_1.setBounds(0, 84, 464, 206);
+panel.add(panel_1);
+panel_1.setLayout(null);
+JLabel lblNewLabel_1 = new JLabel("New label");
+lblNewLabel_1.setBounds(34, 33, 36, 41);
+lblNewLabel_1.setForeground(new Color(169, 169, 169));
+lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp
+Video\\user.png"));
+panel_1.add(lblNewLabel_1);
+JLabel lblNewLabel_2 = new JLabel("New label");
+lblNewLabel_2.setBounds(34, 85, 36, 35);
+lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp
+Video\\password.png"));
+panel_1.add(lblNewLabel_2);
+JLabel lblNewLabel_3 = new JLabel("User Name");
+lblNewLabel_3.setBounds(80, 33, 102, 41);
+lblNewLabel_3.setForeground(new Color(169, 169, 169));
+lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 20));
+lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+panel_1.add(lblNewLabel_3);
+JLabel lblNewLabel_4 = new JLabel("Password"); 
+lblNewLabel_4.setBounds(80, 85, 102, 35);
+lblNewLabel_4.setForeground(new Color(169, 169, 169));
+lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+lblNewLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
+panel_1.add(lblNewLabel_4);
+user = new JTextField();
+user.setBounds(204, 40, 239, 28);
+user.setForeground(new Color(169, 169, 169));
+user.setFont(new Font("Arial", Font.PLAIN, 18));
+panel_1.add(user);
+user.setColumns(10);
+pass = new JPasswordField();
+pass.setBounds(204, 92, 239, 28);
+pass.setForeground(new Color(169, 169, 169));
+panel_1.add(pass);
+JButton jButton_Login = new JButton("Login");
+jButton_Login.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent arg0) {
+try {
+Class.forName("com.mysql.jdbc.Driver");
+Connection
+con=DriverManager.getConnection("jdbc:mysql://localhost:3306/myproject","root","harsh");
+Statement st = con.createStatement();
+String query="select * from myproject.userlogin where
+User_Name='"+user.getText()+"' and Password='"+pass.getText().toString()+"';";
+ResultSet rs = st.executeQuery(query);
+if(rs.next()) {
+//JOptionPane.showMessageDialog(null, "Login
+Successfully.....");
+//Adding a new Frame
+Main_window mw = new Main_window();
+mw.setVisible(true);
+mw.Show_Products_In_JTable();
+}else {
+JOptionPane.showMessageDialog(null, "Incorrect 
+Username / Password");
+}
+} catch (Exception e) {
+System.out.println(e);
+}
+}
+});
+jButton_Login.setBorder(null);
+jButton_Login.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+jButton_Login.setForeground(SystemColor.inactiveCaptionBorder);
+jButton_Login.setBackground(Color.PINK);
+jButton_Login.setFont(new Font("Arial", Font.BOLD,
+24)); jButton_Login.setBounds(152, 125, 173, 41);
+panel_1.add(jButton_Login);
+JPanel panel_2 = new JPanel();
+panel_2.setBackground(new Color(255, 192, 203));
+panel_2.setToolTipText("");
+panel_2.setBounds(150, 0, 175, 67);
+panel.add(panel_2);
+JLabel lblNewLabel = new JLabel("Login");
+lblNewLabel.setForeground(new Color(240, 248, 255));
+lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+lblNewLabel.setBackground(new Color(240, 248, 255));
+lblNewLabel.setFont(new Font("Arial", Font.BOLD, 32));
+panel_2.add(lblNewLabel);
+}
+}
+} catch (Exception e) {
+System.out.println(e);
+}
+}
+});
+jButton_Login.setBorder(null);
+jButton_Login.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+jButton_Login.setForeground(SystemColor.inactiveCaptionBorder);
+jButton_Login.setBackground(Color.PINK);
+jButton_Login.setFont(new Font("Arial", Font.BOLD,
+24)); jButton_Login.setBounds(152, 125, 173, 41); 
+panel_1.add(jButton_Login); JPanel panel_2 = new
+JPanel();
+panel_2.setBackground(new Color(255, 192, 203));
+panel_2.setToolTipText("");
+panel_2.setBounds(150, 0, 175, 67);
+panel.add(panel_2);
+JLabel lblNewLabel = new JLabel("Login");
+lblNewLabel.setForeground(new Color(240, 248, 255));
+lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+lblNewLabel.setBackground(new Color(240, 248, 255));
+lblNewLabel.setFont(new Font("Arial", Font.BOLD, 32));
+panel_2.add(lblNewLabel);
+}
+}
+Product.java
+package MyPackage;
+public class Product {
+private int id;
+private String name;
+private float price;
+private String addDate;
+private int productQuantity;
+private String productDiscription;
+public Product(int pid, String pname, float pprice, String paddate, int pproductquantity,
+String pproductdiscription)
+{
+this.id = pid;
+this.name = pname;
+this.price = pprice;
+this.addDate = paddate;;
+this.productQuantity = pproductquantity;
+this.productDiscription = pproductdiscription;
+}
+public int getId()
+{
+return id;
+}
+public String getName() 
+{
+return name;
+}
+public float getPrice() {
+return price;
+}
+public String getDate() {
+return addDate;
+}
+public int getProductQuantity() {
+return productQuantity;
+}
+public String getProductDiscription() {
+return productDiscription;
+}
+}
+Main_Window.java
+package MyPackage;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.Font;
+import java.awt.Image;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+public class Main_window extends JFrame {
+private JPanel contentPane;
+private JTextField txt_id;
+private JTextField txt_name;
+private JTextField txt_price;
+private JTextField txt_AddDate;
+private static JTable JTable_Products;
+private JLabel lbl_image;
+private JPanel tbl_panel;
+/**
+* Launch the
+application. */
+public static void main(String[] args) {
+EventQueue.invokeLater(new Runnable() {
+public void run() {
+try {
+Main_window frame = new Main_window();
+frame.setVisible(true);
+frame.getConnection();
+Show_Products_In_JTable();
+} catch (Exception e) { 
+e.printStackTrace();
+}
+}
+});
+}
+//Database connection
+public static Connection getConnection() {
+Connection con = null;
+try {
+Class.forName("com.mysql.jdbc.Driver");
+con=DriverManager.getConnection("jdbc:mysql://localhost:3306/myproject","root","harsh");
+//JOptionPane.showMessageDialog(null,
+"Connected"); return con;
+} catch (Exception e) {
+Logger.getLogger(Main_window.class.getName()).log(Level.SEVERE, null,e);
+//JOptionPane.showMessageDialog(null, "Not Connected");
+return null;
+}
+}
+int pos=0;
+private JTextField txt_Product_Quantity;
+private JTextField txt_Product_Discription;
+//Check Input Fields
+public boolean checkInputs()
+{
+if(txt_name.getText() == null
+|| txt_price.getText() == null
+|| txt_AddDate.getText() == null)
+{
+return false;
+}
+else
+{
+try
+{
+Float.parseFloat(txt_price.getText());
+return true;
+}
+catch(Exception e){
+return false;
+}
+}
+}
+//Display data in Jtable
+// 1- Fill Array List with the data
+public static ArrayList<Product> getProductlist()
+{
+ArrayList<Product> productList = new
+ArrayList<Product>(); Connection con = getConnection();
+String SelectQuery = "select * from myproject.products;";
+Statement st;
+ResultSet rs;
+try
+{
+st=con.createStatement();
+rs=st.executeQuery(SelectQuery);
+Product product;
+while(rs.next())
+{
+product = new
+Product(rs.getInt("id"),rs.getString("name"),Float.parseFloat(rs.getString("price")),rs.getString(
+"add_date"),rs.getInt("product_quantity"),rs.getString("product_discription"));
+productList.add(product);
+} }
+catch(Exception e5)
+{
+System.out.println(e5);
+}
+return productList;
+}
+// 2- populate the JTable
+public static void Show_Products_In_JTable()
+{
+try
+{
+ArrayList<Product> list = getProductlist();
+DefaultTableModel model = (DefaultTableModel)JTable_Products.getModel();
+//clear JTable Content
+model.setRowCount(0);
+Object[] row = new Object[6];
+for(int i= 0; i<list.size(); i++ )
+{
+row[0] = list.get(i).getId();
+row[1] = list.get(i).getName();
+row[2] = list.get(i).getPrice();
+row[3] = list.get(i).getDate();
+row[4] = list.get(i).getProductQuantity();
+row[5] = list.get(i).getProductDiscription();
+model.addRow(row);
+}
+}
+catch(Exception e)
+{
+System.out.println(e);
+}
+}
+public void ShowItem(int index) 
+{
+txt_id.setText(Integer.toString(getProductlist().get(index).getId()));
+txt_name.setText(getProductlist().get(index).getName());
+txt_price.setText(Float.toString(getProductlist().get(index).getPrice()));
+txt_AddDate.setText(getProductlist().get(index).getDate());
+txt_Product_Quantity.setText(Integer.toString(getProductlist().get(index).getProductQuantity()) );
+txt_Product_Discription.setText(getProductlist().get(index).getProductDiscription());
+}
+//set fields to null
+public void SetNull()
+{
+txt_id.setText(null);
+txt_name.setText(null);
+txt_price.setText(null);
+txt_AddDate.setText(null);
+txt_Product_Quantity.setText(null);
+txt_Product_Discription.setText(null);
+}
+/**
+* Create the
+frame. */
+public Main_window() { Show_Products_In_JTable();
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+setBounds(100, 100, 1046, 531);
+contentPane = new JPanel();
+contentPane.setBackground(new Color(240, 230,
+140)); contentPane.setBorder(new EmptyBorder(5, 5,
+5, 5)); setContentPane(contentPane);
+contentPane.setLayout(null);
+JLabel lblId = new JLabel("Product Id : ");
+lblId.setBounds(10, 104, 131, 33);
+lblId.setHorizontalAlignment(SwingConstants.LEFT); 
+lblId.setFont(new Font("Tahoma", Font.PLAIN, 16));
+contentPane.add(lblId);
+JLabel lblName = new JLabel("Product Name :");
+lblName.setBounds(10, 148, 131, 33);
+lblName.setHorizontalAlignment(SwingConstants.LEFT);
+lblName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+contentPane.add(lblName);
+JLabel lblNewLabel = new JLabel(" Product Price");
+lblNewLabel.setBounds(10, 192, 131, 33);
+lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+contentPane.add(lblNewLabel);
+JLabel lblAddDate = new JLabel(" Add Date :");
+lblAddDate.setBounds(10, 247, 131, 33);
+lblAddDate.setFont(new Font("Tahoma", Font.PLAIN,
+16)); contentPane.add(lblAddDate);
+JLabel lblImage = new JLabel(" Product Quantity : ");
+lblImage.setBounds(6, 326, 145, 33);
+lblImage.setFont(new Font("Tahoma", Font.PLAIN, 16));
+contentPane.add(lblImage);
+txt_id = new JTextField();
+txt_id.setEditable(false);
+txt_id.setBounds(175, 103, 112, 36);
+contentPane.add(txt_id);
+txt_id.setColumns(10);
+txt_name = new JTextField();
+txt_name.setBounds(175, 150, 232, 33);
+contentPane.add(txt_name);
+txt_name.setColumns(10);
+txt_price = new JTextField();
+txt_price.setBounds(175, 194, 232, 36);
+contentPane.add(txt_price);
+txt_price.setColumns(10);
+txt_AddDate = new JTextField();
+txt_AddDate.setBounds(175, 250, 232, 33);
+contentPane.add(txt_AddDate);
+txt_AddDate.setColumns(10);
+JScrollPane JTable_products = new JScrollPane();
+JTable_products.setBounds(484, 108, 536,
+311); contentPane.add(JTable_products);
+JTable_Products = new JTable();
+JTable_products.setViewportView(JTable_Products);
+JTable_Products.setModel(new DefaultTableModel(
+new Object[][] {
+},
+new String[] {
+"ID", "Name", "Price", "Add Date", "Product Quantity", "Product
+Discription"
+}
+));
+JTable_Products.getColumnModel().getColumn(0).setPreferredWidth(50);
+JTable_Products.getColumnModel().getColumn(4).setPreferredWidth(100);
+JTable_Products.getColumnModel().getColumn(5).setPreferredWidth(100);
+JTable_Products.addMouseListener(new MouseAdapter() {
+@Override
+public void mouseClicked(MouseEvent arg0) {
+int index = JTable_Products.getSelectedRow();
+ShowItem(index);
+}
+});
+JButton Btn_Insert = new JButton("Insert");
+Btn_Insert.setBounds(10, 443, 121, 36);
+Btn_Insert.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+if(checkInputs()) 
+{
+try {
+Connection con = getConnection();
+String name = txt_name.getText();
+String price = txt_price.getText();
+String addDate = txt_AddDate.getText();
+String productQuantity = txt_Product_Quantity.getText();
+String productDiscription =
+txt_Product_Discription.getText();
+String query = "insert into myproject.products
+(name,price,add_date,product_quantity,product_discription) values
+('"+name+"','"+price+"','"+addDate+"','"+productQuantity+"','"+productDiscription+"'); ";
+Statement st=con.createStatement();
+st.executeUpdate(query);
+Show_Products_In_JTable();
+JOptionPane.showMessageDialog(null, "Data inserted
+Successfully");
+SetNull();
+} catch (Exception e1) {
+// TODO Auto-generated catch block
+System.out.println(e1);
+}
+}
+else
+{
+JOptionPane.showMessageDialog(null, "One or more Field are
+Empty ");
+}
+}
+});
+Btn_Insert.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\plus.png"));
+Btn_Insert.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(Btn_Insert); 
+JButton btnUpdate = new JButton("Update");
+btnUpdate.setBounds(143, 443, 128, 36);
+btnUpdate.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e)
+{
+if(checkInputs() && txt_id.getText() != null )
+{
+String UpdateQuery = null;
+Connection con = getConnection();
+try
+{
+String id = txt_id.getText();
+String name = txt_name.getText();
+String price = txt_price.getText();
+String addDate = txt_AddDate.getText();
+String productQuantity =
+txt_Product_Quantity.getText();
+String productDiscription =
+txt_Product_Discription.getText();
+UpdateQuery ="update myproject.products set
+name='"+name+"' , price='"+price+"', add_date ='"+addDate+"',product_quantity
+='"+productQuantity+"',product_discription = '"+productDiscription+"' where id = '"+id+"';";
+Statement st=con.createStatement();
+st.executeUpdate(UpdateQuery);
+Show_Products_In_JTable();
+JOptionPane.showMessageDialog(null, "Product
+Updated Succefully");
+SetNull();
+} catch (Exception e2)
+{
+//JOptionPane.showMessageDialog(null,e2.getMe
+ssage());
+}
+}
+else
+{
+JOptionPane.showMessageDialog(null, "One or more Field are
+Empty or Wrong");
+}
+}
+});
+btnUpdate.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\refresh.png"));
+btnUpdate.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(btnUpdate);
+JButton btnDelete = new JButton("Delete");
+btnDelete.setBounds(281, 443, 128, 36);
+btnDelete.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e)
+{
+if(!txt_id.getText().equals(""))
+{
+try
+{
+Connection con = getConnection();
+int id = Integer.parseInt(txt_id.getText());
+String DeleteQuery = "delete from myproject.products
+where id ='"+id+"';";
+Statement st=con.createStatement();
+st.executeUpdate(DeleteQuery);
+Show_Products_In_JTable();
+JOptionPane.showMessageDialog(null, "Product deleted
+Successfully");
+SetNull();
+}
+catch(Exception e4)
+{
+//JOptionPane.showMessageDialog(null, "Product not
+deleted");
+}
+}
+else
+{
+JOptionPane.showMessageDialog(null, "Product not deleted :
+No Product to Delete");
+}
+}
+});
+btnDelete.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\rubbish.png"));
+btnDelete.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(btnDelete);
+JButton btn_First = new JButton("First");
+btn_First.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent arg0) {
+pos=0;
+ShowItem(pos);
+}
+});
+btn_First.setBounds(485, 443, 131, 36);
+btn_First.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\begin.png"));
+btn_First.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(btn_First);
+JButton btn_Previous = new JButton(" Previous");
+btn_Previous.addActionListener(new ActionListener()
+{ public void actionPerformed(ActionEvent e) {
+pos--;
+if(pos < 0)
+{
+pos = 0;
+}
+ShowItem(pos);
+}
+});
+btn_Previous.setBounds(764, 443, 135, 36);
+btn_Previous.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\left-chevron.png"));
+btn_Previous.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(btn_Previous);
+JButton btn_Next = new JButton("Next");
+btn_Next.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+pos++;
+if(pos >= getProductlist().size())
+{
+pos = getProductlist().size()-1;
+}
+ShowItem(pos);
+}
+});
+btn_Next.setBounds(626, 443, 128, 36);
+btn_Next.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\right-chevron.png"));
+btn_Next.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(btn_Next);
+JButton btnNewButton_3 = new JButton("Last");
+btnNewButton_3.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+pos = getProductlist().size()-1;
+ShowItem(pos);
+}
+}); btnNewButton_3.setBounds(908, 443, 112, 36);
+btnNewButton_3.setIcon(new
+ImageIcon("C:\\Users\\hp\\Desktop\\WhatsApp Video\\arrow-to-last-track.png"));
+btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD,
+14)); contentPane.add(btnNewButton_3);
+JLabel lblNewLabel_1 = new JLabel(" Inventory Management System");
+lblNewLabel_1.setBounds(221, 11, 598, 60);
+lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 32));
+contentPane.add(lblNewLabel_1);
+JLabel lblPleaseEnterDate = new JLabel("Please enter date in dd/mm/yyyy
+fromat !");
+lblPleaseEnterDate.setBounds(175, 288, 240, 28);
+lblPleaseEnterDate.setForeground(new Color(220, 20,
+60)); contentPane.add(lblPleaseEnterDate);
+txt_Product_Quantity = new JTextField();
+txt_Product_Quantity.setBounds(175, 326, 232,
+33); contentPane.add(txt_Product_Quantity);
+txt_Product_Quantity.setColumns(10);
+JLabel lblProductDiscription = new JLabel("Product Discription :");
+lblProductDiscription.setFont(new Font("Tahoma", Font.PLAIN,
+16)); lblProductDiscription.setBounds(10, 386, 145, 33);
+contentPane.add(lblProductDiscription);
+txt_Product_Discription = new JTextField();
+txt_Product_Discription.setBounds(175, 386, 232,
+33); contentPane.add(txt_Product_Discription);
+txt_Product_Discription.setColumns(10);
+}
+} 
